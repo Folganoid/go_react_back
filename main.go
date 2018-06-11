@@ -18,6 +18,10 @@ type User struct {
 	Token string
 }
 
+type Result struct {
+	Result int8
+}
+
 func main() {
 	app := iris.New()
 	app.Logger().SetLevel("debug")
@@ -38,7 +42,7 @@ func main() {
 		ctx.JSON(iris.Map{"message": "Hello Iris!"})
 	})
 
-	app.Get("/test", func(ctx iris.Context) {
+	app.Get("/user", func(ctx iris.Context) {
 
 		db, err := gorm.Open("mysql", "fg:5619@/go?charset=utf8")
 		if err != nil {
@@ -48,9 +52,13 @@ func main() {
 		defer db.Close()
 
 		var user User
-		db.First(&user, 1)
+		db.Where("login = ? AND pass= ?", ctx.FormValue("login"), ctx.FormValue("pass")).Find(&user)
 
-		fmt.Println(user)
+		if user.Id != 0 {
+			fmt.Println(ctx.JSON(user))
+		} else {
+			fmt.Println(ctx.JSON(Result{0}))
+		}
 
 	})
 
