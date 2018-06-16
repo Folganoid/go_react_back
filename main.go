@@ -1,17 +1,18 @@
 package main
 
 import (
-	"fmt"
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/middleware/logger"
 	"github.com/kataras/iris/middleware/recover"
+	"github.com/iris-contrib/middleware/cors"
+	"fmt"
+	"github.com/jinzhu/gorm"
 )
 
 type User struct {
-	Id    int64
+	Id    uint64
 	Login string
 	Pass  string
 	Email string
@@ -27,6 +28,7 @@ func main() {
 	app.Logger().SetLevel("debug")
 	app.Use(recover.New())
 	app.Use(logger.New())
+	app.Use(cors.Default())
 
 	app.RegisterView(iris.HTML("./views", ".html"))
 	app.Get("/", func(ctx iris.Context) {
@@ -42,7 +44,7 @@ func main() {
 		ctx.JSON(iris.Map{"message": "Hello Iris!"})
 	})
 
-	app.Get("/user", func(ctx iris.Context) {
+	app.Post("/user", func(ctx iris.Context) {
 
 		db, err := gorm.Open("mysql", "fg:5619@/go?charset=utf8")
 		if err != nil {
@@ -54,13 +56,20 @@ func main() {
 		var user User
 		db.Where("login = ? AND pass= ?", ctx.FormValue("login"), ctx.FormValue("pass")).Find(&user)
 
-		if user.Id != 0 {
-			fmt.Println(ctx.JSON(user))
+		form := ctx.FormValues()
+
+		fmt.Println(form)
+
+		if user.Id > 0 {
+			fmt.Println(ctx.JSON(User(user)))
 		} else {
-			fmt.Println(ctx.JSON(Result{0}))
+			fmt.Println(ctx.JSON(User{}))
 		}
 
 	})
+	app.Options("/user", func(ctx iris.Context) {
+		ctx.Header("Access-Control-Allow-Origin", "*")
+	})
 
-	app.Run(iris.Addr(":8080"), iris.WithoutServerError(iris.ErrServerClosed))
+	app.Run(iris.Addr(":3001"), iris.WithoutServerError(iris.ErrServerClosed))
 }
