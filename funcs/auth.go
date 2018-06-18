@@ -1,14 +1,18 @@
-package fetch
+package funcs
 
 import (
+	"github.com/kataras/iris"
 	"github.com/jinzhu/gorm"
 	"fmt"
-	"github.com/kataras/iris"
-	"./models"
+	"../models"
+	"../config"
 )
 
-func fetchUser(ctx *iris.Context) {
-	db, err := gorm.Open("mysql", "t430:56195619@/go?charset=utf8")
+func FetchUser(ctx iris.Context) {
+
+	setup := config.Setup()
+
+	db, err := gorm.Open("mysql", setup["db_user"] + ":" + setup["db_pass"] + "@/" + setup["db_name"] + "?charset=utf8")
 	if err != nil {
 		fmt.Println(err)
 		return
