@@ -9,19 +9,9 @@ import (
 	"github.com/iris-contrib/middleware/cors"
 	"fmt"
 	"github.com/jinzhu/gorm"
+	"./models"
 )
 
-type User struct {
-	Id    uint64
-	Login string
-	Pass  string
-	Email string
-	Token string
-}
-
-type Result struct {
-	Result int8
-}
 
 func main() {
 	app := iris.New()
@@ -46,14 +36,14 @@ func main() {
 
 	app.Post("/user", func(ctx iris.Context) {
 
-		db, err := gorm.Open("mysql", "fg:5619@/go?charset=utf8")
+		db, err := gorm.Open("mysql", "t430:56195619@/go?charset=utf8")
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
 		defer db.Close()
 
-		var user User
+		user := models.User{}
 		db.Where("login = ? AND pass= ?", ctx.FormValue("login"), ctx.FormValue("pass")).Find(&user)
 
 		form := ctx.FormValues()
@@ -61,9 +51,9 @@ func main() {
 		fmt.Println(form)
 
 		if user.Id > 0 {
-			fmt.Println(ctx.JSON(User(user)))
+			fmt.Println(ctx.JSON(user))
 		} else {
-			fmt.Println(ctx.JSON(User{}))
+			fmt.Println(ctx.JSON(user))
 		}
 
 	})
