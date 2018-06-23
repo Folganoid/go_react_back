@@ -22,10 +22,6 @@ func FetchUser(ctx iris.Context) {
 	user := models.User{}
 	db.Where("login = ? AND pass= ?", ctx.FormValue("login"), ctx.FormValue("pass")).Find(&user)
 
-	form := ctx.FormValues()
-
-	fmt.Println(form)
-
 	if user.Id > 0 {
 		fmt.Println(ctx.JSON(user))
 	} else {

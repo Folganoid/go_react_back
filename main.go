@@ -32,13 +32,21 @@ func main() {
 		ctx.JSON(iris.Map{"message": "Hello Iris!"})
 	})
 
-	app.Post("/user", func(ctx iris.Context) {
+	app.Post("/reg", func(ctx iris.Context) {
+		//auth
+		funcs.RegUser(ctx)
+	})
 
+	app.Post("/user", func(ctx iris.Context) {
 		//auth
 		funcs.FetchUser(ctx)
-
 	})
+
+
 	app.Options("/user", func(ctx iris.Context) {
+		ctx.Header("Access-Control-Allow-Origin", "*")
+	})
+	app.Options("/reg", func(ctx iris.Context) {
 		ctx.Header("Access-Control-Allow-Origin", "*")
 	})
 
