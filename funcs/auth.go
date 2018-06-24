@@ -23,6 +23,7 @@ func FetchUser(ctx iris.Context) {
 	db.Where("login = ? AND pass= ?", ctx.FormValue("login"), ctx.FormValue("pass")).Find(&user)
 
 	if user.Id > 0 {
+		user.Pass = "" // clear pass
 		fmt.Println(ctx.JSON(user))
 	} else {
 		fmt.Println(ctx.JSON(user))
