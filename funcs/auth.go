@@ -8,6 +8,9 @@ import (
 	"../config"
 )
 
+/**
+Get user
+ */
 func FetchUser(ctx iris.Context) {
 
 	setup := config.Setup()
@@ -20,7 +23,7 @@ func FetchUser(ctx iris.Context) {
 	defer db.Close()
 
 	user := models.User{}
-	db.Where("login = ? AND pass= ?", ctx.FormValue("login"), ctx.FormValue("pass")).Find(&user)
+	db.Where("login = ? AND pass= ?", ctx.FormValue("login"), GetMD5Hash(ctx.FormValue("pass"))).Find(&user)
 
 	if user.Id > 0 {
 		user.Pass = "" // clear pass
