@@ -1,13 +1,11 @@
 package models
 
-import "time"
-
 type User struct {
 	Id    	uint64
 	Login	string
 	Name	string
 	Email	string
-	Date	time.Time
+	Date	int64
 	Rank	uint8
 	Pass  	string
 	Year	string
@@ -19,7 +17,7 @@ func NewUser(
 	login,
 	name,
 	email string,
-	date time.Time,
+	date int64,
 	rank uint8,
 	pass,
 	year,

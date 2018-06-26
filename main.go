@@ -33,7 +33,7 @@ func main() {
 	})
 
 	app.Post("/reg", func(ctx iris.Context) {
-		//auth
+		//registration
 		funcs.RegUser(ctx)
 	})
 
@@ -42,8 +42,16 @@ func main() {
 		funcs.FetchUser(ctx)
 	})
 
+	app.Post("/profupdate", func(ctx iris.Context) {
+		//update user
+		funcs.UpdateUser(ctx)
+	})
+
 
 	app.Options("/user", func(ctx iris.Context) {
+		ctx.Header("Access-Control-Allow-Origin", "*")
+	})
+	app.Options("/profupdate", func(ctx iris.Context) {
 		ctx.Header("Access-Control-Allow-Origin", "*")
 	})
 	app.Options("/reg", func(ctx iris.Context) {

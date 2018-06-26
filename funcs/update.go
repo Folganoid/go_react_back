@@ -4,14 +4,14 @@ import (
 	"github.com/kataras/iris"
 	"github.com/jinzhu/gorm"
 	"fmt"
-	"../models"
 	"../config"
+	"../models"
 )
 
 /**
-Get user
+User update
  */
-func FetchUser(ctx iris.Context) {
+func UpdateUser(ctx iris.Context) {
 
 	setup := config.Setup()
 
@@ -23,14 +23,20 @@ func FetchUser(ctx iris.Context) {
 	defer db.Close()
 
 	user := models.User{}
-	db.Where("login = ? AND pass= ?", ctx.FormValue("login"), GetMD5Hash(ctx.FormValue("pass"))).Find(&user)
+	db.Where("id = ? AND pass = ?", ctx.FormValue("userId"), ctx.FormValue("pass_old")).Find(&user)
 
 	if user.Id > 0 {
 		user.Token = randToken()
+		user.Login = ctx.FormValue("login")
+		user.Email = ctx.FormValue("email")
+		user.Year = ctx.FormValue("year")
+		user.Pass = GetMD5Hash(ctx.FormValue("pass"))
+
 		db.Save(&user)
-		user.Pass = "" // clear pass
+		user.Pass = "updated" // clear pass
 		fmt.Println(ctx.JSON(user))
 	} else {
+		user.Pass = "false" // clear pass
 		fmt.Println(ctx.JSON(user))
 	}
 }

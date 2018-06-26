@@ -29,7 +29,7 @@ func RegUser(ctx iris.Context) {
 		ctx.FormValue("login"),
 		ctx.FormValue("name"),
 		ctx.FormValue("email"),
-		time.Now(),
+		time.Now().Unix(),
 		0,
 		GetMD5Hash(ctx.FormValue("pass")),
 		ctx.FormValue("year"),
