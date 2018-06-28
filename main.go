@@ -1,8 +1,6 @@
 package main
 
 import (
-	_ "github.com/jinzhu/gorm/dialects/mysql"
-
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/middleware/logger"
 	"github.com/kataras/iris/middleware/recover"
@@ -11,52 +9,26 @@ import (
 )
 
 
+func notFound(ctx iris.Context) {
+	ctx.WriteString("Oups something went wrong, try again")
+	//ctx.View("errors/404.html")
+}
+
+func internalServerError(ctx iris.Context) {
+	ctx.WriteString("Oups something went wrong, try again")
+}
+
 func main() {
 	app := iris.New()
 	app.Logger().SetLevel("debug")
 	app.Use(recover.New())
 	app.Use(logger.New())
 	app.Use(cors.Default())
+	app.OnErrorCode(iris.StatusNotFound, notFound)
+	app.OnErrorCode(iris.StatusInternalServerError, internalServerError)
 
-	app.RegisterView(iris.HTML("./views", ".html"))
-	app.Get("/", func(ctx iris.Context) {
-		ctx.ViewData("message", "Hello world!")
-		ctx.View("hello.html")
-	})
-
-	app.Get("/ping", func(ctx iris.Context) {
-		ctx.WriteString("pong")
-	})
-
-	app.Get("/hello", func(ctx iris.Context) {
-		ctx.JSON(iris.Map{"message": "Hello Iris!"})
-	})
-
-	app.Post("/reg", func(ctx iris.Context) {
-		//registration
-		funcs.RegUser(ctx)
-	})
-
-	app.Post("/user", func(ctx iris.Context) {
-		//auth
-		funcs.FetchUser(ctx)
-	})
-
-	app.Post("/profupdate", func(ctx iris.Context) {
-		//update user
-		funcs.UpdateUser(ctx)
-	})
-
-
-	app.Options("/user", func(ctx iris.Context) {
-		ctx.Header("Access-Control-Allow-Origin", "*")
-	})
-	app.Options("/profupdate", func(ctx iris.Context) {
-		ctx.Header("Access-Control-Allow-Origin", "*")
-	})
-	app.Options("/reg", func(ctx iris.Context) {
-		ctx.Header("Access-Control-Allow-Origin", "*")
-	})
+	// routing
+	funcs.Routing(app)
 
 	app.Run(iris.Addr(":3001"), iris.WithoutServerError(iris.ErrServerClosed))
 }
