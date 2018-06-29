@@ -8,7 +8,6 @@ import (
 	"./funcs"
 )
 
-
 func notFound(ctx iris.Context) {
 	ctx.WriteString("Oups something went wrong, try again")
 	//ctx.View("errors/404.html")
@@ -30,5 +29,6 @@ func main() {
 	// routing
 	funcs.Routing(app)
 
+	// starting server
 	app.Run(iris.Addr(":3001"), iris.WithoutServerError(iris.ErrServerClosed))
 }
