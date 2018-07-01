@@ -10,6 +10,7 @@ type User struct {
 	Pass  	string
 	Year	string
 	Token 	string
+	Allow_map	bool
 }
 
 func NewUser(
@@ -21,8 +22,10 @@ func NewUser(
 	rank uint8,
 	pass,
 	year,
-	token string) *User {
+	token string,
+	allow_map bool,
+	) *User {
 
-	return &User{id, login, name, email, date, rank,pass, year, token}
+	return &User{id, login, name, email, date, rank,pass, year, token, allow_map}
 
 }

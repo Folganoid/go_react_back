@@ -43,11 +43,19 @@ func UpdateUser(ctx iris.Context) {
 	db.Where("id = ? AND pass = ?", ctx.FormValue("userId"), GetMD5Hash(ctx.FormValue("pass_old"))).Find(&user)
 
 	if user.Id > 0 {
-		user.Token = randToken()
+
 		user.Login = ctx.FormValue("login")
 		user.Email = ctx.FormValue("email")
 		user.Year = ctx.FormValue("year")
-		user.Pass = GetMD5Hash(ctx.FormValue("pass"))
+		if ctx.FormValue("pass") != "" {
+			user.Pass = GetMD5Hash(ctx.FormValue("pass"))
+		}
+
+		if ctx.FormValue("allow_map") == "1" {
+			user.Allow_map = true
+		} else {
+			user.Allow_map = false
+		}
 
 		db.Save(&user)
 		user.Pass = "" // clear pass
@@ -89,6 +97,7 @@ func RegUser(ctx iris.Context) {
 		GetMD5Hash(ctx.FormValue("pass")),
 		ctx.FormValue("year"),
 		randToken(),
+		false,
 	)
 
 	db.Create(user)
