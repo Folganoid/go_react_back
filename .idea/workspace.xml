@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="92195c27-bf32-497c-8bbb-25febbeb1c1d" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/funcs/Data.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/Stat.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/Year.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/funcs/Auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/funcs/Auth.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/funcs/Markers.go" beforeDir="false" afterPath="$PROJECT_DIR$/funcs/Markers.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/funcs/Routing.go" beforeDir="false" afterPath="$PROJECT_DIR$/funcs/Routing.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/User.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/User.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -49,14 +49,18 @@
       </file>
       <file leaf-file-name="Marker.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/Marker.go">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="24" column="1" lean-forward="true" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+            </state>
+          </provider>
         </entry>
       </file>
-      <file leaf-file-name="Auth.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Auth.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/funcs/Auth.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="450">
-              <caret line="38" column="24" lean-forward="true" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
+              <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -64,8 +68,8 @@
       <file leaf-file-name="Markers.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/funcs/Markers.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="587">
-              <caret line="33" column="59" lean-forward="true" selection-start-line="33" selection-start-column="59" selection-end-line="33" selection-end-column="59" />
+            <state relative-caret-position="36">
+              <caret line="2" column="6" selection-end-line="25" selection-end-column="1" />
               <folding>
                 <element signature="e#15#72#0" expanded="true" />
               </folding>
@@ -73,11 +77,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Routing.go" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Data.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/funcs/Data.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+              <folding>
+                <element signature="e#15#59#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Routing.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/funcs/Routing.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="21" column="112" lean-forward="true" selection-start-line="21" selection-start-column="112" selection-end-line="21" selection-end-column="112" />
+            <state relative-caret-position="234">
+              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
             </state>
           </provider>
         </entry>
@@ -111,9 +127,12 @@
         <option value="$PROJECT_DIR$/funcs/FetchUser.go" />
         <option value="$PROJECT_DIR$/models/Marker.go" />
         <option value="$PROJECT_DIR$/models/User.go" />
-        <option value="$PROJECT_DIR$/funcs/Routing.go" />
         <option value="$PROJECT_DIR$/funcs/Markers.go" />
         <option value="$PROJECT_DIR$/funcs/Auth.go" />
+        <option value="$PROJECT_DIR$/models/Stat.go" />
+        <option value="$PROJECT_DIR$/models/Year.go" />
+        <option value="$PROJECT_DIR$/funcs/Data.go" />
+        <option value="$PROJECT_DIR$/funcs/Routing.go" />
       </list>
     </option>
   </component>
@@ -138,7 +157,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -165,6 +183,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -222,21 +241,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config/config.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/User.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="9" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/funcs/reg.go" />
     <entry file="file://$PROJECT_DIR$/funcs/auth.go" />
     <entry file="file://$PROJECT_DIR$/funcs/update.go" />
     <entry file="file://$PROJECT_DIR$/main.go">
@@ -413,20 +417,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/Marker.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/funcs/Routing.go">
+    <entry file="file://$PROJECT_DIR$/funcs/Auth.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="21" column="112" lean-forward="true" selection-start-line="21" selection-start-column="112" selection-end-line="21" selection-end-column="112" />
+        <state relative-caret-position="450">
+          <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/funcs/Markers.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="587">
-          <caret line="33" column="59" lean-forward="true" selection-start-line="33" selection-start-column="59" selection-end-line="33" selection-end-column="59" />
+        <state relative-caret-position="36">
+          <caret line="2" column="6" selection-end-line="25" selection-end-column="1" />
           <folding>
             <element signature="e#15#72#0" expanded="true" />
           </folding>
@@ -440,10 +441,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/funcs/Auth.go">
+    <entry file="file://$PROJECT_DIR$/models/Marker.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="38" column="24" lean-forward="true" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
+        <state relative-caret-position="432">
+          <caret line="24" column="1" lean-forward="true" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Year.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="21" column="13" lean-forward="true" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Stat.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="497">
+          <caret line="52" column="15" lean-forward="true" selection-end-line="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/funcs/Data.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+          <folding>
+            <element signature="e#15#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/funcs/Routing.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
