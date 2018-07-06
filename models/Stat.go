@@ -5,7 +5,6 @@ type Stat struct {
 	Dist    float64
 	Time    string
 	Bike    string
-	Avgspd  float64
 	Maxspd  float64
 	Avgpls  uint64
 	Maxpls  uint64
@@ -31,7 +30,6 @@ func NewStat(
 	dist float64,
 	time string,
 	bike string,
-	avgspd float64,
 	maxspd float64,
 	avgpls uint64,
 	maxpls uint64,
@@ -53,7 +51,6 @@ func NewStat(
 		dist,
 		time,
 		bike,
-		avgspd,
 		maxspd,
 		avgpls,
 		maxpls,
