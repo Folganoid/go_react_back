@@ -3,14 +3,14 @@ package models
 type Stat struct {
 	Id      uint64
 	Dist    float64
-	Time    uint64
+	Time    string
 	Bike    string
 	Avgspd  float64
 	Maxspd  float64
 	Avgpls  uint64
 	Maxpls  uint64
 	Tires   string
-	Date    uint64
+	Date    []uint8
 	Surfasf uint8
 	Surftvp uint8
 	Surfgrn uint8
@@ -22,17 +22,21 @@ type Stat struct {
 	Userid  uint64
 }
 
+func (Stat) TableName() string {
+	return "statdata"
+}
+
 func NewStat(
 	id uint64,
 	dist float64,
-	time uint64,
+	time string,
 	bike string,
 	avgspd float64,
 	maxspd float64,
 	avgpls uint64,
 	maxpls uint64,
 	tires string,
-	date uint64,
+	date []uint8,
 	surfasf uint8,
 	surftvp uint8,
 	surfgrn uint8,

@@ -8,6 +8,11 @@ type Year struct {
 	Dist   float64
 }
 
+func (Year) TableName() string {
+	return "yeardata"
+}
+
+
 func NewYear(
 	id uint64,
 	userid uint64,

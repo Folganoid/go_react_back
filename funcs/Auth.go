@@ -98,6 +98,7 @@ func RegUser(ctx iris.Context) {
 		ctx.FormValue("year"),
 		randToken(),
 		false,
+		false,
 	)
 
 	db.Create(user)
