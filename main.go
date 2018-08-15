@@ -1,11 +1,11 @@
 package main
 
 import (
+	"./funcs"
+	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/middleware/logger"
 	"github.com/kataras/iris/middleware/recover"
-	"github.com/iris-contrib/middleware/cors"
-	"./funcs"
 )
 
 func notFound(ctx iris.Context) {
