@@ -4,6 +4,7 @@ import (
 	"../models"
 	"fmt"
 	"github.com/kataras/iris"
+	"strconv"
 )
 
 /**
@@ -86,4 +87,50 @@ func GetTireList(ctx iris.Context) {
 	db.Where("userid = ?", ctx.FormValue("userid")).Find(&tires)
 
 	fmt.Println(ctx.JSON(tires))
+}
+
+func AddBike(ctx iris.Context) {
+
+	check := CheckUser(&ctx, ctx.FormValue("userid"), ctx.FormValue("token"))
+
+	if !check {
+		ctx.StatusCode(401)
+		ctx.WriteString("SYSTEM Error Access denied 401")
+		return
+	}
+
+	if len(ctx.FormValue("bike")) > 0 {
+
+		db := ConnectDB(ctx)
+		defer db.Close()
+
+		userId, _ := strconv.ParseUint(ctx.FormValue("userid"), 10, 64)
+		bike := models.NewBike(0, ctx.FormValue("bike"), userId)
+		db.Create(&bike)
+
+		fmt.Println(db.NewRecord(bike))
+	}
+}
+
+func AddTire(ctx iris.Context) {
+
+	check := CheckUser(&ctx, ctx.FormValue("userid"), ctx.FormValue("token"))
+
+	if !check {
+		ctx.StatusCode(401)
+		ctx.WriteString("SYSTEM Error Access denied 401")
+		return
+	}
+
+	if len(ctx.FormValue("tire")) > 0 {
+
+		db := ConnectDB(ctx)
+		defer db.Close()
+
+		userId, _ := strconv.ParseUint(ctx.FormValue("userid"), 10, 64)
+		tire := models.NewTire(0, ctx.FormValue("tire"), userId)
+		db.Create(&tire)
+
+		fmt.Println(db.NewRecord(tire))
+	}
 }

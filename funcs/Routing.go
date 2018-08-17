@@ -18,6 +18,8 @@ func Routing(app *iris.Application) {
 	app.Post("/get_stat_data", func(ctx iris.Context) { GetStat(ctx) })
 	app.Post("/get_bike_list", func(ctx iris.Context) { GetBikeList(ctx) })
 	app.Post("/get_tire_list", func(ctx iris.Context) { GetTireList(ctx) })
+	app.Post("/add_bike", func(ctx iris.Context) { AddBike(ctx) })
+	app.Post("/add_tire", func(ctx iris.Context) { AddTire(ctx) })
 
 	app.Options("/user", func(ctx iris.Context) { ctx.Header("Access-Control-Allow-Origin", setup["frontPath"]) })
 	app.Options("/profupdate", func(ctx iris.Context) { ctx.Header("Access-Control-Allow-Origin", setup["frontPath"]) })
@@ -29,4 +31,6 @@ func Routing(app *iris.Application) {
 	app.Options("/get_stat_data", func(ctx iris.Context) { ctx.Header("Access-Control-Allow-Origin", setup["frontPath"]) })
 	app.Options("/get_bike_list", func(ctx iris.Context) { ctx.Header("Access-Control-Allow-Origin", setup["frontPath"]) })
 	app.Options("/get_tire_list", func(ctx iris.Context) { ctx.Header("Access-Control-Allow-Origin", setup["frontPath"]) })
+	app.Options("/add_bike", func(ctx iris.Context) { ctx.Header("Access-Control-Allow-Origin", setup["frontPath"]) })
+	app.Options("/add_tire", func(ctx iris.Context) { ctx.Header("Access-Control-Allow-Origin", setup["frontPath"]) })
 }
