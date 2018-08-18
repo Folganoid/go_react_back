@@ -51,7 +51,11 @@ func GetStat(ctx iris.Context) {
 	fmt.Println(ctx.JSON(stats))
 }
 
-func GetBikeList(ctx iris.Context) {
+/**
+ * [Bike description]
+ * @param {[type]} ctx iris.Context [description]
+ */
+func Bike(ctx iris.Context) {
 
 	check := CheckUser(&ctx, ctx.FormValue("userid"), ctx.FormValue("token"))
 
@@ -64,13 +68,41 @@ func GetBikeList(ctx iris.Context) {
 	db := ConnectDB(ctx)
 	defer db.Close()
 
-	bikes := []models.Bike{}
-	db.Where("userid = ?", ctx.FormValue("userid")).Find(&bikes)
+	// POST
+	if ctx.Method() == "POST" {
 
-	fmt.Println(ctx.JSON(bikes))
+		bikes := []models.Bike{}
+		db.Where("userid = ?", ctx.FormValue("userid")).Find(&bikes)
+		fmt.Println(ctx.JSON(bikes))
+	}
+
+	// PUT
+	if ctx.Method() == "PUT" {
+		if len(ctx.FormValue("bike")) > 0 {
+
+			userId, _ := strconv.ParseUint(ctx.FormValue("userid"), 10, 64)
+			bike := models.NewBike(0, ctx.FormValue("bike"), userId)
+			db.Create(&bike)
+
+			fmt.Println(db.NewRecord(bike))
+		}
+	}
+
+	// DELETE
+	if ctx.Method() == "DELETE" {
+
+		id, _ := strconv.ParseUint(ctx.FormValue("id"), 10, 64)
+
+		bike := models.NewBike(id, "", 0)
+		db.Delete(&bike)
+	}
 }
 
-func GetTireList(ctx iris.Context) {
+/**
+ * [Tire description]
+ * @param {[type]} ctx iris.Context [description]
+ */
+func Tire(ctx iris.Context) {
 
 	check := CheckUser(&ctx, ctx.FormValue("userid"), ctx.FormValue("token"))
 
@@ -83,13 +115,41 @@ func GetTireList(ctx iris.Context) {
 	db := ConnectDB(ctx)
 	defer db.Close()
 
-	tires := []models.Tire{}
-	db.Where("userid = ?", ctx.FormValue("userid")).Find(&tires)
+	// PUT
+	if ctx.Method() == "PUT" {
+		if len(ctx.FormValue("tire")) > 0 {
 
-	fmt.Println(ctx.JSON(tires))
+			userId, _ := strconv.ParseUint(ctx.FormValue("userid"), 10, 64)
+			tire := models.NewTire(0, ctx.FormValue("tire"), userId)
+			db.Create(&tire)
+
+			fmt.Println(db.NewRecord(tire))
+		}
+	}
+
+	// POST
+	if ctx.Method() == "POST" {
+		tires := []models.Tire{}
+		db.Where("userid = ?", ctx.FormValue("userid")).Find(&tires)
+		fmt.Println(ctx.JSON(tires))
+	}
+
+	// DELETE
+	if ctx.Method() == "DELETE" {
+
+		id, _ := strconv.ParseUint(ctx.FormValue("id"), 10, 64)
+
+		tire := models.NewTire(id, "", 0)
+		db.Delete(&tire)
+	}
+
 }
 
-func AddBike(ctx iris.Context) {
+/**
+ * [YearDist description]
+ * @param {[type]} ctx iris.Context [description]
+ */
+func YearDist(ctx iris.Context) {
 
 	check := CheckUser(&ctx, ctx.FormValue("userid"), ctx.FormValue("token"))
 
@@ -99,38 +159,37 @@ func AddBike(ctx iris.Context) {
 		return
 	}
 
-	if len(ctx.FormValue("bike")) > 0 {
+	db := ConnectDB(ctx)
+	defer db.Close()
 
-		db := ConnectDB(ctx)
-		defer db.Close()
+	// POST
+	if ctx.Method() == "POST" {
+
+		yearList := []models.YearDist{}
+		db.Where("userid = ?", ctx.FormValue("userid")).Order("year desc", true).Find(&yearList)
+
+		fmt.Println(ctx.JSON(yearList))
+	}
+
+	// PUT
+	if ctx.Method() == "PUT" {
 
 		userId, _ := strconv.ParseUint(ctx.FormValue("userid"), 10, 64)
-		bike := models.NewBike(0, ctx.FormValue("bike"), userId)
-		db.Create(&bike)
+		year, _ := strconv.ParseUint(ctx.FormValue("year"), 10, 64)
+		dist, _ := strconv.ParseFloat(ctx.FormValue("dist"), 64)
 
-		fmt.Println(db.NewRecord(bike))
-	}
-}
+		yearDist := models.NewYearDist(0, userId, year, ctx.FormValue("bike"), dist)
+		db.Create(&yearDist)
 
-func AddTire(ctx iris.Context) {
-
-	check := CheckUser(&ctx, ctx.FormValue("userid"), ctx.FormValue("token"))
-
-	if !check {
-		ctx.StatusCode(401)
-		ctx.WriteString("SYSTEM Error Access denied 401")
-		return
+		//fmt.Println(db.NewRecord(yearDist))
 	}
 
-	if len(ctx.FormValue("tire")) > 0 {
+	// DELETE
+	if ctx.Method() == "DELETE" {
 
-		db := ConnectDB(ctx)
-		defer db.Close()
-
-		userId, _ := strconv.ParseUint(ctx.FormValue("userid"), 10, 64)
-		tire := models.NewTire(0, ctx.FormValue("tire"), userId)
-		db.Create(&tire)
-
-		fmt.Println(db.NewRecord(tire))
+		id, _ := strconv.ParseUint(ctx.FormValue("id"), 10, 64)
+		yearDist := models.NewYearDist(id, 0, 0, "", 0)
+		db.Delete(&yearDist)
 	}
+
 }

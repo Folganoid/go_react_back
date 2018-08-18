@@ -18,11 +18,18 @@ func internalServerError(ctx iris.Context) {
 }
 
 func main() {
+
+	crs := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowCredentials: true,
+		AllowedMethods:   []string{"GET", "OPTIONS", "POST", "PUT", "DELETE"},
+	})
+
 	app := iris.New()
 	app.Logger().SetLevel("debug")
 	app.Use(recover.New())
 	app.Use(logger.New())
-	app.Use(cors.Default())
+	app.Use(crs)
 	app.OnErrorCode(iris.StatusNotFound, notFound)
 	app.OnErrorCode(iris.StatusInternalServerError, internalServerError)
 
