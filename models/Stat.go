@@ -10,10 +10,10 @@ type Stat struct {
 	Maxpls  uint64
 	Tires   string
 	Date    uint64
-	Surfasf uint8
-	Surftvp uint8
-	Surfgrn uint8
-	Srfbzd  uint8
+	Surfasf uint64
+	Surftvp uint64
+	Surfgrn uint64
+	Srfbzd  uint64
 	Prim    string
 	Teh     string
 	Temp    string
@@ -35,10 +35,10 @@ func NewStat(
 	maxpls uint64,
 	tires string,
 	date uint64,
-	surfasf uint8,
-	surftvp uint8,
-	surfgrn uint8,
-	srfbzd uint8,
+	surfasf uint64,
+	surftvp uint64,
+	surfgrn uint64,
+	srfbzd uint64,
 	prim string,
 	teh string,
 	temp string,

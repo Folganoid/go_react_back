@@ -191,5 +191,41 @@ func YearDist(ctx iris.Context) {
 		yearDist := models.NewYearDist(id, 0, 0, "", 0)
 		db.Delete(&yearDist)
 	}
+}
+
+/**
+ * [Stat description]
+ */
+func Stat(ctx iris.Context) {
+
+	check := CheckUser(&ctx, ctx.FormValue("userid"), ctx.FormValue("token"))
+
+	if !check {
+		ctx.StatusCode(401)
+		ctx.WriteString("SYSTEM Error Access denied 401")
+		return
+	}
+
+	db := ConnectDB(ctx)
+	defer db.Close()
+
+	// PUT
+	if ctx.Method() == "PUT" {
+
+		userId, _ := strconv.ParseUint(ctx.FormValue("userid"), 10, 64)
+		dist, _ := strconv.ParseFloat(ctx.FormValue("dist"), 64)
+		time, _ := strconv.ParseUint(ctx.FormValue("time"), 10, 64)
+		maxspd, _ := strconv.ParseFloat(ctx.FormValue("maxspd"), 64)
+		avgpls, _ := strconv.ParseUint(ctx.FormValue("avgpls"), 10, 64)
+		maxpls, _ := strconv.ParseUint(ctx.FormValue("maxpls"), 10, 64)
+		date, _ := strconv.ParseUint(ctx.FormValue("date"), 10, 64)
+		surfasf, _ := strconv.ParseUint(ctx.FormValue("asf"), 10, 64)
+		surftvp, _ := strconv.ParseUint(ctx.FormValue("tvp"), 10, 64)
+		surfgrn, _ := strconv.ParseUint(ctx.FormValue("grn"), 10, 64)
+		srfbzd, _ := strconv.ParseUint(ctx.FormValue("bzd"), 10, 64)
+
+		yearDist := models.NewStat(0, dist, time, ctx.FormValue("bike"), maxspd, avgpls, maxpls, ctx.FormValue("tire"), date, surfasf, surftvp, surfgrn, srfbzd, ctx.FormValue("prim"), ctx.FormValue("teh"), ctx.FormValue("temp"), ctx.FormValue("wind"), userId)
+		db.Create(&yearDist)
+	}
 
 }
