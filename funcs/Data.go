@@ -224,8 +224,14 @@ func Stat(ctx iris.Context) {
 		surfgrn, _ := strconv.ParseUint(ctx.FormValue("grn"), 10, 64)
 		srfbzd, _ := strconv.ParseUint(ctx.FormValue("bzd"), 10, 64)
 
-		yearDist := models.NewStat(0, dist, time, ctx.FormValue("bike"), maxspd, avgpls, maxpls, ctx.FormValue("tire"), date, surfasf, surftvp, surfgrn, srfbzd, ctx.FormValue("prim"), ctx.FormValue("teh"), ctx.FormValue("temp"), ctx.FormValue("wind"), userId)
-		db.Create(&yearDist)
+		if dist > 0 && time > 0 && len(ctx.FormValue("bike")) > 0 && len(ctx.FormValue("tire")) > 0 && (surfasf+surftvp+surfgrn+srfbzd == 100) && len(ctx.FormValue("prim")) > 0 {
+			yearDist := models.NewStat(0, dist, time, ctx.FormValue("bike"), maxspd, avgpls, maxpls, ctx.FormValue("tire"), date, surfasf, surftvp, surfgrn, srfbzd, ctx.FormValue("prim"), ctx.FormValue("teh"), ctx.FormValue("temp"), ctx.FormValue("wind"), userId)
+			db.Create(&yearDist)
+		} else {
+			ctx.StatusCode(404)
+			ctx.WriteString("Bad data")
+			return
+		}
 	}
 
 }
