@@ -1,17 +1,17 @@
 package funcs
 
 import (
-	"github.com/kataras/iris"
-	"fmt"
 	"../models"
-	"time"
-	"math/rand"
 	"crypto/md5"
+	"fmt"
+	"github.com/kataras/iris"
+	"math/rand"
+	"time"
 )
 
 /**
 Get user
- */
+*/
 func FetchUser(ctx iris.Context) {
 
 	db := ConnectDB(ctx)
@@ -33,7 +33,7 @@ func FetchUser(ctx iris.Context) {
 
 /**
 User update
- */
+*/
 func UpdateUser(ctx iris.Context) {
 
 	db := ConnectDB(ctx)
@@ -68,7 +68,7 @@ func UpdateUser(ctx iris.Context) {
 
 /**
 Check user
- */
+*/
 func CheckUser(ctx *iris.Context, userid string, token string) bool {
 	db := ConnectDB(*ctx)
 	defer db.Close()
@@ -80,6 +80,23 @@ func CheckUser(ctx *iris.Context, userid string, token string) bool {
 		return true
 	} else {
 		return false
+	}
+}
+
+/**
+ * check allow stat
+ */
+func CheckAllowStat(ctx *iris.Context, login string) uint64 {
+	db := ConnectDB(*ctx)
+	defer db.Close()
+
+	user := models.User{}
+	db.Where("login = ? AND allow_stat= ?", login, 1).Find(&user)
+
+	if user.Id > 0 {
+		return user.Id
+	} else {
+		return 0
 	}
 }
 

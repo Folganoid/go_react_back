@@ -14,7 +14,12 @@ func GetYear(ctx iris.Context) {
 
 	check := CheckUser(&ctx, ctx.FormValue("userid"), ctx.FormValue("token"))
 
-	if !check {
+	checkAllow := uint64(0)
+	if len(ctx.FormValue("foreign")) > 0 {
+		checkAllow = CheckAllowStat(&ctx, ctx.FormValue("foreign"))
+	}
+
+	if !check && checkAllow == 0 {
 		ctx.StatusCode(401)
 		ctx.WriteString("SYSTEM Error Access denied 401")
 		return
@@ -23,8 +28,13 @@ func GetYear(ctx iris.Context) {
 	db := ConnectDB(ctx)
 	defer db.Close()
 
+	userId, _ := strconv.ParseUint(ctx.FormValue("userid"), 10, 64)
+	if checkAllow > 0 {
+		userId = checkAllow
+	}
+
 	years := []models.Year{}
-	db.Where("userid = ?", ctx.FormValue("userid")).Find(&years)
+	db.Where("userid = ?", userId).Find(&years)
 
 	fmt.Println(ctx.JSON(years))
 }
@@ -34,9 +44,15 @@ Get statistic by user Id
 */
 func GetStat(ctx iris.Context) {
 
+	checkAllow := uint64(0)
+
+	if len(ctx.FormValue("foreign")) > 0 {
+		checkAllow = CheckAllowStat(&ctx, ctx.FormValue("foreign"))
+	}
+
 	check := CheckUser(&ctx, ctx.FormValue("userid"), ctx.FormValue("token"))
 
-	if !check {
+	if !check && checkAllow == 0 {
 		ctx.StatusCode(401)
 		ctx.WriteString("SYSTEM Error Access denied 401")
 		return
@@ -45,8 +61,13 @@ func GetStat(ctx iris.Context) {
 	db := ConnectDB(ctx)
 	defer db.Close()
 
+	userId, _ := strconv.ParseUint(ctx.FormValue("userid"), 10, 64)
+	if checkAllow > 0 {
+		userId = checkAllow
+	}
+
 	stats := []models.Stat{}
-	db.Where("userid = ?", ctx.FormValue("userid")).Find(&stats)
+	db.Where("userid = ?", userId).Find(&stats)
 
 	fmt.Println(ctx.JSON(stats))
 }
