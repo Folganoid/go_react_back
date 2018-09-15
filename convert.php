@@ -1,6 +1,6 @@
 <?php
 
-$dbh = new PDO("mysql:host=localhost;dbname=go","fg","5619", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+$dbh = new PDO("mysql:host=localhost;dbname=go","fg","56195619", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
 
 $sth = $dbh->prepare("SELECT * FROM statdata");
 $sth->execute();
@@ -9,8 +9,8 @@ $result = $sth->fetchAll();
 //var_dump($result);
 
 foreach ($result as $k => $v) {
-//$sql = "UPDATE statdata SET date=". convertDate($v['date']) ." WHERE id=" . $v['id'];
-$sql = "UPDATE statdata SET time=". convertTime($v['time']) ." WHERE id=" . $v['id'];
+$sql = "UPDATE statdata SET date=". convertDate($v['date']) ." WHERE id=" . $v['id'];
+//$sql = "UPDATE statdata SET time=". convertTime($v['time']) ." WHERE id=" . $v['id'];
 $stmt = $dbh->prepare($sql);
 $stmt->execute();
 }

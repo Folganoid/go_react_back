@@ -230,8 +230,8 @@ func Stat(ctx iris.Context) {
 	db := ConnectDB(ctx)
 	defer db.Close()
 
-	// PUT
-	if ctx.Method() == "PUT" {
+	// POST
+	if ctx.Method() == "POST" || ctx.Method() == "PUT" {
 
 		userId, _ := strconv.ParseUint(ctx.FormValue("userid"), 10, 64)
 		dist, _ := strconv.ParseFloat(ctx.FormValue("dist"), 64)
@@ -244,15 +244,18 @@ func Stat(ctx iris.Context) {
 		surftvp, _ := strconv.ParseUint(ctx.FormValue("tvp"), 10, 64)
 		surfgrn, _ := strconv.ParseUint(ctx.FormValue("grn"), 10, 64)
 		srfbzd, _ := strconv.ParseUint(ctx.FormValue("bzd"), 10, 64)
+		id, _ := strconv.ParseUint(ctx.FormValue("id"), 10, 64)
 
-		if dist > 0 && time > 0 && len(ctx.FormValue("bike")) > 0 && len(ctx.FormValue("tire")) > 0 && (surfasf+surftvp+surfgrn+srfbzd == 100) && len(ctx.FormValue("prim")) > 0 {
-			yearDist := models.NewStat(0, dist, time, ctx.FormValue("bike"), maxspd, avgpls, maxpls, ctx.FormValue("tire"), date, surfasf, surftvp, surfgrn, srfbzd, ctx.FormValue("prim"), ctx.FormValue("teh"), ctx.FormValue("temp"), ctx.FormValue("wind"), userId)
-			db.Create(&yearDist)
+		if ctx.Method() == "PUT" && id > 0 && dist > 0 && time > 0 && len(ctx.FormValue("bike")) > 0 && len(ctx.FormValue("tire")) > 0 && (surfasf+surftvp+surfgrn+srfbzd == 100) && len(ctx.FormValue("prim")) > 0 {
+			stat := models.NewStat(id, dist, time, ctx.FormValue("bike"), maxspd, avgpls, maxpls, ctx.FormValue("tire"), date, surfasf, surftvp, surfgrn, srfbzd, ctx.FormValue("prim"), ctx.FormValue("teh"), ctx.FormValue("temp"), ctx.FormValue("wind"), userId)
+			db.Model(stat).Updates(&stat)
+		} else if ctx.Method() == "POST" && dist > 0 && time > 0 && len(ctx.FormValue("bike")) > 0 && len(ctx.FormValue("tire")) > 0 && (surfasf+surftvp+surfgrn+srfbzd == 100) && len(ctx.FormValue("prim")) > 0 {
+			stat := models.NewStat(0, dist, time, ctx.FormValue("bike"), maxspd, avgpls, maxpls, ctx.FormValue("tire"), date, surfasf, surftvp, surfgrn, srfbzd, ctx.FormValue("prim"), ctx.FormValue("teh"), ctx.FormValue("temp"), ctx.FormValue("wind"), userId)
+			db.Create(&stat)
 		} else {
 			ctx.StatusCode(404)
 			ctx.WriteString("Bad data")
 			return
 		}
 	}
-
 }
