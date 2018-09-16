@@ -247,6 +247,16 @@ func Stat(ctx iris.Context) {
 		id, _ := strconv.ParseUint(ctx.FormValue("id"), 10, 64)
 
 		if ctx.Method() == "PUT" && id > 0 && dist > 0 && time > 0 && len(ctx.FormValue("bike")) > 0 && len(ctx.FormValue("tire")) > 0 && (surfasf+surftvp+surfgrn+srfbzd == 100) && len(ctx.FormValue("prim")) > 0 {
+
+			s := models.Stat{}
+			db.Where("id = ? AND userId =?", id, userId).Find(&s)
+
+			if userId != s.Userid {
+				ctx.StatusCode(401)
+				ctx.WriteString("SYSTEM Error Access denied 401")
+				return
+			}
+
 			stat := models.NewStat(id, dist, time, ctx.FormValue("bike"), maxspd, avgpls, maxpls, ctx.FormValue("tire"), date, surfasf, surftvp, surfgrn, srfbzd, ctx.FormValue("prim"), ctx.FormValue("teh"), ctx.FormValue("temp"), ctx.FormValue("wind"), userId)
 			db.Model(stat).Updates(&stat)
 		} else if ctx.Method() == "POST" && dist > 0 && time > 0 && len(ctx.FormValue("bike")) > 0 && len(ctx.FormValue("tire")) > 0 && (surfasf+surftvp+surfgrn+srfbzd == 100) && len(ctx.FormValue("prim")) > 0 {
