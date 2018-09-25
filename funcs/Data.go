@@ -230,6 +230,23 @@ func Stat(ctx iris.Context) {
 	db := ConnectDB(ctx)
 	defer db.Close()
 
+	// DELETE
+	if ctx.Method() == "DELETE" {
+
+		userId, _ := strconv.ParseUint(ctx.FormValue("userid"), 10, 64)
+		id, _ := strconv.ParseUint(ctx.FormValue("id"), 10, 64)
+
+		s := models.Stat{}
+		db.Where("id = ? AND userId =?", id, userId).Find(&s)
+
+		if userId != s.Userid {
+			ctx.StatusCode(401)
+			ctx.WriteString("SYSTEM Error Access denied 401")
+			return
+		}
+		db.Delete(&s)
+	}
+
 	// POST
 	if ctx.Method() == "POST" || ctx.Method() == "PUT" {
 
