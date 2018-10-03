@@ -59,6 +59,25 @@ func Marker(ctx iris.Context) {
 	defer db.Close()
 
 	userId, _ := strconv.ParseUint(ctx.FormValue("userid"), 10, 64)
+
+	// DELETE
+	if ctx.Method() == "DELETE" {
+
+		id, _ := strconv.ParseUint(ctx.FormValue("id"), 10, 64)
+		marker := models.Marker{}
+
+		db.Where("userid = ? AND id = ?", userId, id).Find(&marker)
+		fmt.Println(ctx.JSON(marker))
+
+		if userId != marker.Userid {
+			ctx.StatusCode(401)
+			ctx.WriteString("SYSTEM Error Access denied 401")
+			return
+		}
+
+		db.Delete(&marker)
+	}
+
 	name := ctx.FormValue("name")
 	subname := ctx.FormValue("subname")
 	link := ctx.FormValue("link")
@@ -73,7 +92,7 @@ func Marker(ctx iris.Context) {
 	x, err := strconv.ParseFloat(crds[0], 64)
 	y, err2 := strconv.ParseFloat(crds[1], 64)
 
-	if !match || err != nil || err2 != nil {
+	if !match || err != nil || err2 != nil || len(color) == 0 || len(name) == 0 {
 		ctx.StatusCode(500)
 		ctx.WriteString("Bad data")
 		return
@@ -81,14 +100,35 @@ func Marker(ctx iris.Context) {
 
 	// POST
 	if ctx.Method() == "POST" {
-		if len(name) > 0 && len(color) > 0 && len(coord) > 0 {
+		if len(name) > 0 && len(color) > 0 && x > 0 && y > 0 {
 			marker := models.NewMarker(0, userId, x, y, name, subname, link, color)
 			db.Create(&marker)
+			return
 		}
 	}
 
 	// PUT
 	if ctx.Method() == "PUT" {
 
+		id, _ := strconv.ParseUint(ctx.FormValue("id"), 10, 64)
+		marker := models.Marker{}
+
+		db.Where("userid = ? AND id = ?", userId, id).Find(&marker)
+		fmt.Println(ctx.JSON(marker))
+
+		if userId != marker.Userid {
+			ctx.StatusCode(401)
+			ctx.WriteString("SYSTEM Error Access denied 401")
+			return
+		}
+
+		marker.X = x
+		marker.Y = y
+		marker.Name = name
+		marker.Subname = subname
+		marker.Link = link
+		marker.Color = color
+
+		db.Model(&marker).Updates(&marker)
 	}
 }
