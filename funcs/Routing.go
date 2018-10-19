@@ -18,4 +18,5 @@ func Routing(app *iris.Application) {
 	app.Any("/year_dist", func(ctx iris.Context) { YearDist(ctx) })
 	app.Any("/stat", func(ctx iris.Context) { Stat(ctx) })
 	app.Any("/marker", func(ctx iris.Context) { Marker(ctx) })
+	app.Post("/token", func(ctx iris.Context) { Token(ctx) })
 }

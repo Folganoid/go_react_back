@@ -126,6 +126,21 @@ func RegUser(ctx iris.Context) {
 	}
 }
 
+func Token(ctx iris.Context) {
+	db := ConnectDB(ctx)
+	defer db.Close()
+
+	user := models.User{}
+	db.Where("token = ?", ctx.FormValue("token")).Find(&user)
+
+	if user.Id > 0 {
+		fmt.Println(ctx.JSON(user))
+	} else {
+		ctx.StatusCode(401)
+		ctx.WriteString("SYSTEM Error unauthorized 401")
+	}
+}
+
 /**
 * create random token
  */
