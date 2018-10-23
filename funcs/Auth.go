@@ -57,6 +57,12 @@ func UpdateUser(ctx iris.Context) {
 			user.Allow_map = false
 		}
 
+		if ctx.FormValue("allow_stat") == "1" {
+			user.Allow_stat = true
+		} else {
+			user.Allow_stat = false
+		}
+
 		db.Save(&user)
 		user.Pass = "" // clear pass
 		fmt.Println(ctx.JSON(user))
