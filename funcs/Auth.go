@@ -76,6 +76,11 @@ func UpdateUser(ctx iris.Context) {
 Check user
 */
 func CheckUser(ctx *iris.Context, userid string, token string) bool {
+
+	if len(token) == 0 {
+		return false
+	}
+
 	db := ConnectDB(*ctx)
 	defer db.Close()
 
@@ -133,17 +138,24 @@ func RegUser(ctx iris.Context) {
 }
 
 func Token(ctx iris.Context) {
-	db := ConnectDB(ctx)
-	defer db.Close()
 
-	user := models.User{}
-	db.Where("token = ?", ctx.FormValue("token")).Find(&user)
-
-	if user.Id > 0 {
-		fmt.Println(ctx.JSON(user))
-	} else {
+	if len(ctx.FormValue("token")) == 0 {
 		ctx.StatusCode(401)
 		ctx.WriteString("SYSTEM Error unauthorized 401")
+	} else {
+
+		db := ConnectDB(ctx)
+		defer db.Close()
+
+		user := models.User{}
+		db.Where("token = ?", ctx.FormValue("token")).Find(&user)
+
+		if user.Id > 0 {
+			fmt.Println(ctx.JSON(user))
+		} else {
+			ctx.StatusCode(401)
+			ctx.WriteString("SYSTEM Error unauthorized 401")
+		}
 	}
 }
 
