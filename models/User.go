@@ -1,5 +1,7 @@
 package models
 
+import "../config"
+
 type User struct {
 	Id    	uint64
 	Login	string
@@ -12,6 +14,10 @@ type User struct {
 	Token 	string
 	Allow_map	bool
 	Allow_stat	bool
+}
+
+func (User) TableName() string {
+	return config.Setup()["db_prefix"]+"users"
 }
 
 func NewUser(

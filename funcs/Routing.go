@@ -19,4 +19,6 @@ func Routing(app *iris.Application) {
 	app.Any("/stat", func(ctx iris.Context) { Stat(ctx) })
 	app.Any("/marker", func(ctx iris.Context) { Marker(ctx) })
 	app.Post("/token", func(ctx iris.Context) { Token(ctx) })
+
+	app.Get("/test", func(ctx iris.Context) { Test(ctx) })
 }

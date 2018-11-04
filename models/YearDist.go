@@ -1,5 +1,7 @@
 package models
 
+import "../config"
+
 type YearDist struct {
 	Id     uint64
 	Userid uint64
@@ -9,7 +11,7 @@ type YearDist struct {
 }
 
 func (YearDist) TableName() string {
-	return "yeardata"
+	return config.Setup()["db_prefix"]+"yeardata"
 }
 
 func NewYearDist(

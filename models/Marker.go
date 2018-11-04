@@ -1,5 +1,7 @@
 package models
 
+import "../config"
+
 type Marker struct {
 	Id    	uint64
 	Userid	uint64
@@ -9,6 +11,10 @@ type Marker struct {
 	Subname	string
 	Link  	string
 	Color	string
+}
+
+func (Marker) TableName() string {
+	return config.Setup()["db_prefix"]+"markers"
 }
 
 func NewMarker(

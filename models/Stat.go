@@ -1,5 +1,7 @@
 package models
 
+import "../config"
+
 type Stat struct {
 	Id      uint64
 	Dist    float64
@@ -22,7 +24,7 @@ type Stat struct {
 }
 
 func (Stat) TableName() string {
-	return "statdata"
+	return config.Setup()["db_prefix"]+"statdata"
 }
 
 func NewStat(

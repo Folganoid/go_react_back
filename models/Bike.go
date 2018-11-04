@@ -1,5 +1,7 @@
 package models
 
+import "../config"
+
 type Bike struct {
 	Id     uint64
 	Name   string
@@ -7,7 +9,7 @@ type Bike struct {
 }
 
 func (Bike) TableName() string {
-	return "ts"
+	return config.Setup()["db_prefix"]+"ts"
 }
 
 func NewBike(

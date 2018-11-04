@@ -33,7 +33,7 @@ func GetYear(ctx iris.Context) {
 		userId = checkAllow
 	}
 
-	years := []models.Year{}
+	years := []models.YearDist{}
 	db.Where("userid = ?", userId).Find(&years)
 
 	fmt.Println(ctx.JSON(years))

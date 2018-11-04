@@ -1,5 +1,7 @@
 package models
 
+import "../config"
+
 type Tire struct {
 	Id     uint64
 	Name   string
@@ -7,7 +9,7 @@ type Tire struct {
 }
 
 func (Tire) TableName() string {
-	return "tire"
+	return config.Setup()["db_prefix"]+"tire"
 }
 
 func NewTire(
