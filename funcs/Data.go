@@ -67,7 +67,7 @@ func GetStat(ctx iris.Context) {
 	}
 
 	stats := []models.Stat{}
-	db.Where("userid = ?", userId).Find(&stats)
+	db.Where("userid = ?", userId).Order("date desc").Find(&stats)
 
 	fmt.Println(ctx.JSON(stats))
 }
@@ -262,6 +262,7 @@ func Stat(ctx iris.Context) {
 		surfgrn, _ := strconv.ParseUint(ctx.FormValue("grn"), 10, 64)
 		srfbzd, _ := strconv.ParseUint(ctx.FormValue("bzd"), 10, 64)
 		id, _ := strconv.ParseUint(ctx.FormValue("id"), 10, 64)
+		teh := ctx.FormValue("teh")
 
 		if ctx.Method() == "PUT" && id > 0 && dist > 0 && time > 0 && len(ctx.FormValue("bike")) > 0 && len(ctx.FormValue("tire")) > 0 && (surfasf+surftvp+surfgrn+srfbzd == 100) && len(ctx.FormValue("prim")) > 0 {
 
@@ -274,10 +275,10 @@ func Stat(ctx iris.Context) {
 				return
 			}
 
-			stat := models.NewStat(id, dist, time, ctx.FormValue("bike"), maxspd, avgpls, maxpls, ctx.FormValue("tire"), date, surfasf, surftvp, surfgrn, srfbzd, ctx.FormValue("prim"), ctx.FormValue("teh"), ctx.FormValue("temp"), ctx.FormValue("wind"), userId)
-			db.Model(stat).Updates(&stat)
+			stat := models.NewStat(id, dist, time, ctx.FormValue("bike"), maxspd, avgpls, maxpls, ctx.FormValue("tire"), date, surfasf, surftvp, surfgrn, srfbzd, ctx.FormValue("prim"), teh, ctx.FormValue("temp"), ctx.FormValue("wind"), userId)
+			db.Save(stat)
 		} else if ctx.Method() == "POST" && dist > 0 && time > 0 && len(ctx.FormValue("bike")) > 0 && len(ctx.FormValue("tire")) > 0 && (surfasf+surftvp+surfgrn+srfbzd == 100) && len(ctx.FormValue("prim")) > 0 {
-			stat := models.NewStat(0, dist, time, ctx.FormValue("bike"), maxspd, avgpls, maxpls, ctx.FormValue("tire"), date, surfasf, surftvp, surfgrn, srfbzd, ctx.FormValue("prim"), ctx.FormValue("teh"), ctx.FormValue("temp"), ctx.FormValue("wind"), userId)
+			stat := models.NewStat(0, dist, time, ctx.FormValue("bike"), maxspd, avgpls, maxpls, ctx.FormValue("tire"), date, surfasf, surftvp, surfgrn, srfbzd, ctx.FormValue("prim"), teh, ctx.FormValue("temp"), ctx.FormValue("wind"), userId)
 			db.Create(&stat)
 		} else {
 			ctx.StatusCode(404)
