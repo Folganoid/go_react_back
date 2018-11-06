@@ -1,7 +1,7 @@
 package funcs
 
 import (
-	"../models"
+	"github.com/user/velofggorest/models"
 	"crypto/md5"
 	"fmt"
 	"github.com/kataras/iris"

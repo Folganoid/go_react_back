@@ -6,7 +6,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"fmt"
 	"github.com/kataras/iris"
-	"../config"
+	"github.com/user/velofggorest/config"
 )
 
 func ConnectDB(ctx iris.Context) *gorm.DB {

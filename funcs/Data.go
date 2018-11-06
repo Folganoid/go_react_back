@@ -1,7 +1,7 @@
 package funcs
 
 import (
-	"../models"
+	"github.com/user/velofggorest/models"
 	"fmt"
 	"github.com/kataras/iris"
 	"strconv"
@@ -34,7 +34,7 @@ func GetYear(ctx iris.Context) {
 	}
 
 	years := []models.YearDist{}
-	db.Where("userid = ?", userId).Find(&years)
+	db.Where("userid = ?", userId).Order("year desc").Find(&years)
 
 	fmt.Println(ctx.JSON(years))
 }

@@ -1,7 +1,7 @@
 package funcs
 
 import (
-	"../models"
+	"github.com/user/velofggorest/models"
 	"fmt"
 	"github.com/kataras/iris"
 	"regexp"

@@ -1,6 +1,6 @@
 package models
 
-import "../config"
+import "github.com/user/velofggorest/config"
 
 type Stat struct {
 	Id      uint64

@@ -1,11 +1,13 @@
 package main
 
 import (
-	"./funcs"
+	"fmt"
+	"github.com/user/velofggorest/funcs"
 	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/middleware/logger"
 	"github.com/kataras/iris/middleware/recover"
+	"os"
 )
 
 func notFound(ctx iris.Context) {
@@ -15,6 +17,14 @@ func notFound(ctx iris.Context) {
 
 func internalServerError(ctx iris.Context) {
 	ctx.WriteString("Oups something went wrong, try again")
+}
+
+func determineListenAddress() (string, error) {
+	port := os.Getenv("PORT")
+	if port == "" {
+		return "", fmt.Errorf("$PORT not set")
+	}
+	return ":" + port, nil
 }
 
 func main() {
@@ -36,6 +46,8 @@ func main() {
 	// routing
 	funcs.Routing(app)
 
+	port, _ := determineListenAddress()
+
 	// starting server
-	app.Run(iris.Addr(":3001"), iris.WithoutServerError(iris.ErrServerClosed))
+	app.Run(iris.Addr(port), iris.WithoutServerError(iris.ErrServerClosed))
 }
