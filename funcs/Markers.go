@@ -33,11 +33,11 @@ func GetForeignMarkers(ctx iris.Context) {
 	defer db.Close()
 
 	user := models.User{}
-	db.Where("login = ? AND allow_map = 1", ctx.FormValue("login")).Find(&user)
+	db.Where("login = ? AND allow_map = ?", ctx.FormValue("login"), true).Find(&user)
 
 	if user.Id > 0 {
 		markers := []models.Marker{}
-		db.Where("userid = ?", user.Id).Find(&markers)
+		db.Where("userid = ?", &user.Id).Find(&markers)
 		fmt.Println(ctx.JSON(markers))
 	} else {
 		ctx.StatusCode(401)
